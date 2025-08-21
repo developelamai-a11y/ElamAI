@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Mail, Phone, Send, CheckCircle } from 'lucide-react';
 
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby3xRN6y45n4EvvWS1kFPNAXUM2-57B4r8-Pwn2wchVJvTUGYydkE1RL4VfuBa8GNlN7w/exec';
+
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -10,6 +12,8 @@ const Contact: React.FC = () => {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -18,15 +22,42 @@ const Contact: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real application, you would send this data to your backend
-    console.log('Form submitted:', formData);
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      // Google Apps Script Web App typically accepts form-encoded payloads
+      const payload = new URLSearchParams();
+      Object.entries(formData).forEach(([key, value]) => payload.append(key, value));
+
+      const res = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: payload.toString()
+      });
+
+      if (!res.ok) {
+        throw new Error(`Submission failed (${res.status})`);
+      }
+
+      // success: clear form and show confirmation
       setFormData({ name: '', email: '', company: '', phone: '', message: '' });
-    }, 3000);
+      setIsSubmitted(true);
+
+      // auto-hide success state after 3s
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 3000);
+    } catch (err) {
+      console.log('Submission error:', err);
+      setSubmitError( 'Submission failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -52,7 +83,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-sm text-gray-400">Email</p>
-                    <p className="text-lg font-semibold text-white">contact@elamai.com</p>
+                    <p className="text-lg font-semibold text-white">contact@elamai.in</p>
                   </div>
                 </div>
 
@@ -62,7 +93,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-sm text-gray-400">Phone</p>
-                    <p className="text-lg font-semibold text-white">+91-XXXX-XXX-XXX</p>
+                    <p className="text-lg font-semibold text-white">+91 9747419297</p>
                   </div>
                 </div>
               </div>
@@ -184,12 +215,15 @@ const Contact: React.FC = () => {
                   />
                 </div>
 
+                {submitError && <p className="text-sm text-red-400">{submitError}</p>}
+
                 <button
                   type="submit"
-                  className="group w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-cyan-500/25 flex items-center justify-center space-x-3"
+                  disabled={isSubmitting}
+                  className="group w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-cyan-500/25 flex items-center justify-center space-x-3 disabled:opacity-60"
                 >
                   <Send className="w-5 h-5" />
-                  <span>Schedule My Free Consultation</span>
+                  <span>{isSubmitting ? 'Sending...' : 'Schedule My Free Consultation'}</span>
                 </button>
               </form>
             )}

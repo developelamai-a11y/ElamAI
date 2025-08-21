@@ -1,31 +1,73 @@
 import React from 'react';
-import { MessageCircle, Users, ShoppingCart, TrendingUp } from 'lucide-react';
+import { MessageSquare, Users, FileText, ClipboardCheck, Calendar, BookOpen, TrendingUp } from 'lucide-react';
 
 const CaseStudies: React.FC = () => {
   const cases = [
     {
-      icon: MessageCircle,
-      title: 'Customer Support Transformation',
-      challenge: 'Startup X was overwhelmed by support tickets.',
-      solution: 'Elam AI implemented a custom chatbot integrated with their CRM.',
-      outcome: '60% faster responses, 24/7 support availability, happier customers.',
-      color: 'from-blue-500 to-blue-600'
-    },
-    {
-      icon: Users,
-      title: 'HR Workflow Automation',
-      challenge: 'An SME spent 200+ hours monthly on employee onboarding.',
-      solution: 'Intelligent workflows automated document approval & onboarding processes.',
-      outcome: 'Saved over 150 hours monthly, reduced paperwork errors by 80%.',
+      icon: MessageSquare,
+      title: 'WhatsApp Automation',
+      domain: 'Customer Engagement & Support',
+      workflows: [
+        'Automated & template responses',
+        'Rich media (images, receipts) messaging',
+        'Order / ticket status updates'
+      ],
       color: 'from-green-500 to-green-600'
     },
     {
-      icon: ShoppingCart,
-      title: 'Smarter Retail Forecasting',
-      challenge: 'A growing retailer struggled with inaccurate sales projections.',
-      solution: 'Predictive analytics integrated with POS and ERP systems.',
-      outcome: 'Forecast accuracy improved by 40%, leading to better inventory management.',
+      icon: Users,
+      title: 'Lead Management — Digital Marketing',
+      domain: 'Marketing & Sales',
+      workflows: [
+        'Lead capture & qualification',
+        'Nurture sequences & segmentation',
+        'Campaign attribution & scoring'
+      ],
+      color: 'from-blue-500 to-blue-600'
+    },
+    {
+      icon: FileText,
+      title: 'Resume Intake AI Agent',
+      domain: 'Human Resources & Recruitment',
+      workflows: [
+        'Resume Intake',
+        'Role-Based Scoring',
+        'Fit Filtering'
+      ],
+      color: 'from-blue-500 to-blue-600'
+    },
+    {
+      icon: ClipboardCheck,
+      title: 'Payroll Audit AI Agent',
+      domain: 'Human Resources & Recruitment',
+      workflows: [
+        'Data Review',
+        'Error Flagging',
+        'Compliance Checks'
+      ],
+      color: 'from-green-500 to-green-600'
+    },
+    {
+      icon: Calendar,
+      title: 'Interview Scheduling AI Agent',
+      domain: 'Human Resources & Recruitment',
+      workflows: [
+        'Availability Matching',
+        'Slot Suggestions',
+        'Booking Confirmation'
+      ],
       color: 'from-purple-500 to-purple-600'
+    },
+    {
+      icon: BookOpen,
+      title: 'Interview Prep AI Agent',
+      domain: 'Human Resources & Recruitment',
+      workflows: [
+        'Interview Pack Generation',
+        'Candidate + JD Summary',
+        'Question Suggestions'
+      ],
+      color: 'from-orange-500 to-orange-600'
     }
   ];
 
@@ -34,10 +76,10 @@ const CaseStudies: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Success Stories
+            AI Agents: Workforce With Human-Level Performance
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Real results from businesses that transformed their operations with our AI solutions
+            AI agents act as a digital workforce, capable of reasoning, learning, and adapting like humans. They streamline operations, boost efficiency, and scale innovation at speed.
           </p>
         </div>
 
@@ -56,28 +98,30 @@ const CaseStudies: React.FC = () => {
                 
                 <div className="relative">
                   <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${caseStudy.color} rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                  <Icon className="w-8 h-8 text-white" />
+                    <Icon className="w-8 h-8 text-white" />
                   </div>
 
                   <h3 className="text-xl font-bold text-white mb-6 group-hover:text-cyan-400 transition-colors duration-300">
-                  {caseStudy.title}
+                    {caseStudy.title}
                   </h3>
 
                   <div className="space-y-4 text-sm">
-                  <div>
-                      <span className="font-semibold text-red-400">Challenge:</span>
-                      <p className="text-gray-300 mt-1">{caseStudy.challenge}</p>
-                  </div>
+                    <div>
+                      <span className="font-semibold text-indigo-300">Domain:</span>
+                      <p className="text-gray-300 mt-1">{caseStudy.domain}</p>
+                    </div>
 
-                  <div>
-                      <span className="font-semibold text-blue-400">Solution:</span>
-                      <p className="text-gray-300 mt-1">{caseStudy.solution}</p>
-                  </div>
-
-                  <div>
-                      <span className="font-semibold text-green-400">Outcome:</span>
-                      <p className="text-gray-300 mt-1">{caseStudy.outcome}</p>
-                  </div>
+                    <div>
+                      <span className="font-semibold text-cyan-300">Workflows:</span>
+                      <ul className="mt-2 space-y-2">
+                        {caseStudy.workflows.map((wf, i) => (
+                          <li key={i} className="flex items-start space-x-3">
+                            <div className="w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
+                            <span className="text-gray-300 text-sm">{wf}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>

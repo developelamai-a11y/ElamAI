@@ -6,7 +6,7 @@ import UseCases from './components/UseCases';
 import About from './components/About';
 import Services from './components/Services';
 import CaseStudies from './components/CaseStudies';
-import Testimonials from './components/Testimonials';
+// import Testimonials from './components/Testimonials';
 import Insights from './components/Insights';
 import FAQ from './components/FAQ';
 import LeadCaptureSection from './components/LeadCaptureSection';
@@ -25,7 +25,7 @@ function App() {
         <About />
         <Services />
         <CaseStudies />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <Insights />
         <FAQ />
         <Contact />

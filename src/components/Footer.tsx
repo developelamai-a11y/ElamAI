@@ -1,5 +1,6 @@
 import React from 'react';
-import { Bot, Mail, Phone, Linkedin, Twitter, Facebook } from 'lucide-react';
+import { Mail, Phone, Linkedin, X, Facebook } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 const Footer: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
@@ -14,21 +15,21 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-6">
-              <Bot className="h-8 w-8 text-cyan-400" />
-              <span className="text-xl font-bold">Elam AI</span>
+            <div className="flex items-center space-x-3 mb-6">
+              <img src={logo} alt="Elam AI" className="h-16 md:h-20 lg:h-24 w-auto object-contain" />
+              {/* <span className="text-xl font-bold">Elam AI</span> */}
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
               Empowering businesses of all sizes to leverage AI with confidence, clarity, and measurable results.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors duration-200">
+              <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors duration-200" aria-label="LinkedIn">
                 <Linkedin className="w-6 h-6" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors duration-200">
-                <Twitter className="w-6 h-6" />
+              <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors duration-200" aria-label="X">
+                <X className="w-6 h-6" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors duration-200">
+              <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors duration-200" aria-label="Facebook">
                 <Facebook className="w-6 h-6" />
               </a>
             </div>
@@ -111,7 +112,7 @@ const Footer: React.FC = () => {
                   href="mailto:contact@elamai.com"
                   className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
                 >
-                  contact@elamai.com
+                  contact@elamai.in
                 </a>
               </div>
               <div className="flex items-center space-x-3">
@@ -120,7 +121,7 @@ const Footer: React.FC = () => {
                   href="tel:+91XXXXXXXXXX"
                   className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
                 >
-                  +91-XXXX-XXX-XXX
+                  +91-9747419297
                 </a>
               </div>
             </div>

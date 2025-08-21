@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, Cog, BarChart3, Database, Link } from 'lucide-react';
+import { MessageCircle, Cog, BarChart3, Database, Link, ShieldCheck } from 'lucide-react';
 
 const UseCases: React.FC = () => {
   const cases = [
@@ -32,6 +32,12 @@ const UseCases: React.FC = () => {
       title: 'Seamless Integrations',
       description: 'AI embedded into your existing tools (Slack, CRMs, ERP).',
       color: 'from-teal-500 to-teal-600'
+    },
+    {
+      icon: ShieldCheck,
+      title: 'Security & Compliance',
+      description: 'Enterprise-grade privacy, encryption, and compliance tools.',
+      color: 'from-red-500 to-red-600'
     }
   ];
 
@@ -62,13 +68,13 @@ const UseCases: React.FC = () => {
                 
                 <div className="relative">
                   <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${useCase.color} rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                  <Icon className="w-8 h-8 text-white" />
+                    <Icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors duration-300">
-                  {useCase.title}
+                    {useCase.title}
                   </h3>
                   <p className="text-gray-300 leading-relaxed">
-                  {useCase.description}
+                    {useCase.description}
                   </p>
                 </div>
               </div>
