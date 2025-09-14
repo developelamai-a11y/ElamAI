@@ -461,39 +461,6 @@ const SolutionsSection = () => {
               ))}
             </div>
           </motion.div>
-
-          {/* Bottom CTA - Keep original styling */}
-          <motion.div
-            className="text-center mt-16 sm:mt-20"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.p
-              className="text-base sm:text-lg text-white/70 mb-8 font-light"
-              whileHover={{ y: -2 }}
-            >
-              Ready to transform your business with AI solutions?
-            </motion.p>
-            <motion.button
-              className="inline-flex items-center gap-2 bg-white/95 text-black px-7 py-3.5 rounded-xl font-medium transition-all duration-300 text-base shadow-lg hover:shadow-xl hover:bg-white/90 group"
-              whileHover={{
-                scale: 1.02,
-                y: -2,
-                transition: { duration: 0.2 },
-              }}
-              whileTap={{
-                scale: 0.98,
-                transition: { duration: 0.1 },
-              }}
-            >
-              Get Started Today
-              <motion.div className="group-hover:translate-x-1 transition-transform duration-300">
-                <ArrowRight className="w-5 h-5" />
-              </motion.div>
-            </motion.button>
-          </motion.div>
         </div>
       </div>
     </motion.div>

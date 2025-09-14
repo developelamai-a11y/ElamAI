@@ -26,16 +26,46 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [autoHideTimeout, setAutoHideTimeout] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const currentY = window.scrollY;
+      const heroHeight = document.getElementById('hero-section')?.offsetHeight || 600;
+      setScrolled(currentY > 20);
+      if (currentY < heroHeight) {
+        setShowNavbar(true);
+        setLastScrollY(currentY);
+        if (autoHideTimeout) clearTimeout(autoHideTimeout);
+        return;
+      }
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (currentY < lastScrollY) {
+            setShowNavbar(true);
+            if (autoHideTimeout) clearTimeout(autoHideTimeout);
+            setAutoHideTimeout(setTimeout(() => setShowNavbar(false), 3500)); // Increased timeout
+          } else if (currentY > lastScrollY) {
+            setShowNavbar(false);
+            if (autoHideTimeout) clearTimeout(autoHideTimeout);
+          }
+          setLastScrollY(currentY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (autoHideTimeout) clearTimeout(autoHideTimeout);
+    };
+  }, [lastScrollY, autoHideTimeout]);
 
   const scrollToSection = (sectionId) => {
     if (location.pathname !== '/') {
@@ -127,30 +157,31 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans ${
-          scrolled
-            ? "bg-black/85 backdrop-blur-xl border-b border-white/10"
-            : "bg-transparent"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans block ${showNavbar ? '' : 'opacity-0 pointer-events-none'}`}
+        style={{ 
+          background: (typeof window !== 'undefined' && window.scrollY < (document.getElementById('hero-section')?.offsetHeight || 600)) 
+            ? 'none' 
+            : 'rgba(0,0,0,0.92)',
+          boxShadow: 'none' 
+        }}
         initial={{ y: -100 }}
-        animate={{ y: 0 }}
+        animate={{ y: showNavbar ? 0 : -100 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-1"> {/* Decreased pt-3 and pb-1 for less vertical space */}
+          <div className="flex items-center justify-between h-20">
             <motion.div
-              className="flex items-center"
+              className="flex items-center mt-1" // Decreased mt-1 for logo
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               <Link
                 to="/"
-                className="flex items-center pl-4" // Added pl-4 for left padding
+                className="flex items-center pl-4"
                 onClick={() => {
                   setActiveDropdown(null);
                   setIsMobileMenuOpen(false);
-                  // Add any additional logic if needed
                 }}
                 style={{ cursor: "pointer" }}
               >
@@ -164,31 +195,30 @@ const Navbar = () => {
             </motion.div>
 
             <motion.div
-              className="hidden md:flex items-center space-x-1"
+              className="hidden md:flex items-center space-x-1 mt-1" // Decreased mt-1 for nav items
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               {navItems.map((item, index) => (
-                <div key={item.name} className="relative group">
+                <div key={item.name} className="relative group"
+                  onMouseEnter={() => setActiveDropdown(index)}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
                   <motion.button
-                    onClick={() => {
-                      handleDropdownToggle(index);
-                      handleMainNavClick(item);
-                    }}
-                    onMouseEnter={() => setActiveDropdown(index)}
-                    className="flex items-center px-4 py-2 text-sm text-white/70 hover:text-white transition-all duration-200 rounded-lg hover:bg-white/10 group font-medium"
-                    whileHover={{ scale: 1.02 }}
+                    // Remove onClick for desktop dropdown
+                    className="flex items-center px-5 py-3 text-lg text-white/80 hover:text-white transition-all duration-200 rounded-lg hover:bg-white/10 group font-semibold mt-1"
+                    whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <span className="font-medium tracking-wide">
+                    <span className="font-semibold tracking-wide text-lg">
                       {item.name}
                     </span>
                     <motion.div
                       animate={{ rotate: activeDropdown === index ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <ChevronDown className="ml-2 h-4 w-4" />
+                      <ChevronDown className="ml-2 h-5 w-5" />
                     </motion.div>
                   </motion.button>
 
@@ -231,7 +261,7 @@ const Navbar = () => {
             </motion.div>
 
             <motion.div
-              className="hidden md:flex items-center"
+              className="hidden md:flex items-center mt-1" // Decreased mt-1 for CTA button
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}

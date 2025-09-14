@@ -129,17 +129,17 @@ const HeroSection = () => {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
+      <div className="relative z-10 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col">
+        <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col justify-start">
           {/* Hero Content */}
-          <div className="pt-20 sm:pt-32 lg:pt-40 pb-12">
-        <div className="text-center max-w-4xl mx-auto">
+          <div className="pt-48 sm:pt-44 lg:pt-52 pb-24"> {/* More top padding on mobile only, desktop unchanged */}
+            <div className="text-center max-w-4xl mx-auto flex flex-col items-center justify-center">
               {/* Headline */}
-              <motion.div className="mb-6" variants={itemVariants}>
+              <motion.div className="mb-6 w-full flex justify-center" variants={itemVariants}>
                 <BlurText
                   text="Enterprise AI Automation Solutions"
                   onAnimationComplete={handleAnimationComplete}
-                  className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-light text-white leading-tight tracking-tight"
+                  className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-light text-white leading-tight tracking-tight text-center"
                 />
               </motion.div>
 
@@ -194,8 +194,8 @@ const HeroSection = () => {
                 </div>
               </motion.div>
 
-              {/* CTA */}
-              <motion.div className="mb-16 sm:mb-20" variants={itemVariants}>
+              {/* CTA Button - now just below benefits, always visible */}
+              <motion.div className="mt-6 sm:mt-10 flex justify-center" variants={itemVariants}>
                 <motion.div
                   variants={itemVariants}
                   whileHover={{

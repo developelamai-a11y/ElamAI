@@ -419,36 +419,7 @@ const MultiAgentSection = () => {
             </div>
           </motion.div>
 
-          {/* Call to Action */}
-          <motion.div className="text-center" variants={itemVariants}>
-            <motion.button
-              className="inline-flex items-center justify-center bg-white/95 text-black px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-xl font-medium transition-all duration-300 text-sm sm:text-base shadow-lg hover:shadow-xl hover:bg-white/90"
-              whileHover={{
-                scale: 1.02,
-                y: -2,
-                transition: { duration: 0.2 },
-              }}
-              whileTap={{
-                scale: 0.98,
-                transition: { duration: 0.1 },
-              }}
-            >
-              Explore Multi-Agent Solutions
-              <svg
-                className="w-4 h-4 ml-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </motion.button>
-          </motion.div>
+         
         </div>
       </div>
     </motion.section>

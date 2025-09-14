@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, FileText, Calculator, Calendar, MessageSquare, BarChart3, Search, Mail } from 'lucide-react';
 
-const AIAgentsSection = () => {
+const ServicesSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
 
@@ -310,4 +310,4 @@ const AIAgentsSection = () => {
   );
 };
 
-export default AIAgentsSection;
+export default ServicesSection;
